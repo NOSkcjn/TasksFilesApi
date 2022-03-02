@@ -67,6 +67,9 @@ namespace TasksFilesApi.Presentation.Controllers
         {
             try
             {
+                if (files == null || files.Count == 0)
+                    return NoContent();
+
                 var command = new CreateFilesCommand
                 {
                     Files = await Task.WhenAll(files.Select(async x =>
@@ -97,6 +100,9 @@ namespace TasksFilesApi.Presentation.Controllers
                 if (!taskId.HasValue)
                     return BadRequest();
 
+                if (file == null)
+                    return NoContent();
+
                 var data = await file.GetBytesAsync();
                 var command = new CreateTaskFileCommand { TaskId = taskId.Value, Name = file.FileName, ContentType = file.ContentType, Data = data };
 
@@ -120,6 +126,9 @@ namespace TasksFilesApi.Presentation.Controllers
             {
                 if (!id.HasValue)
                     return BadRequest();
+
+                if (file == null)
+                    return NoContent();
 
                 var data = await file.GetBytesAsync();
                 var command = new UpdateFileByIdCommand { Id = id.Value, Name = file.FileName, ContentType = file.ContentType, Data = data };

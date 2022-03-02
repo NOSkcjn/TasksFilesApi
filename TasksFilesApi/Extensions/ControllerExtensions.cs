@@ -8,7 +8,7 @@ namespace TasksFilesApi.Presentation.Extensions
     {
         public static async Task<byte[]> GetBytesAsync(this IFormFile file)
         {
-            if (file.Length > 0)
+            if (file?.Length > 0)
             {
                 using (var ms = new MemoryStream())
                 {
